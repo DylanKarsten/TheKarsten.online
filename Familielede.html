@@ -17,48 +17,50 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        /* Custom font for headings */
         .font-pacifico {
             font-family: 'Pacifico', cursive;
         }
-        /* Default font for the body */
         body {
             font-family: 'Nunito', sans-serif;
-            background-color: #FFFBEF; /* A slightly warmer, lighter cream background */
+            background-color: #FFF8E1;
         }
-        /* Styling for the stat bars */
         .stat-bar-bg {
-            background-color: #F3F4F6; /* gray-200 */
+            background-color: #E5E7EB;
             border-radius: 9999px;
-            height: 8px;
+            height: 10px;
             overflow: hidden;
             flex-grow: 1;
         }
         .stat-bar {
-            background-color: #F97316; /* orange-500 */
+            background: linear-gradient(90deg, #f97316, #fb923c);
             height: 100%;
             border-radius: 9999px;
-            transition: width 0.5s ease-in-out;
+            transition: width 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        /* Enhanced hover effect for navigation links */
         .nav-link-hover {
-            transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+            transition: all 0.3s ease;
         }
         .nav-link-hover:hover {
             transform: translateY(-2px);
-            color: #F97316; /* orange-500 */
+            color: #f97316;
+        }
+        .member-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .member-card:hover {
+            transform: translateY(-10px);
         }
     </style>
 </head>
 <body class="text-gray-800 antialiased">
 
-    <!-- Header -->
+    <!-- Header Section -->
     <header class="bg-white shadow-md sticky top-0 z-50">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <!-- Logo -->
-            <a href="index.html" class="text-3xl sm:text-4xl font-pacifico text-orange-500">Die Karstens</a>
-            
-              <!-- Desktop Navigation -->
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="text-3xl font-pacifico text-orange-500">Die Karstens</a>
+                
+                <!-- Desktop Navigation -->
                 <nav class="hidden lg:flex items-center space-x-1 font-bold text-gray-600">
                     <a href="index.html" class="px-4 py-2 rounded-full nav-link-hover">Tuis</a>
                     <a href="BoyOrGirl.html" class="px-4 py-2 rounded-full nav-link-hover">Gender Reveal!</a>
@@ -69,20 +71,21 @@
                 </nav>
 
                 <!-- Mobile Menu Button -->
-                <button id="mobile-menu-button" class="lg:hidden p-2 text-gray-600 hover:text-orange-500">
-                    <i data-lucide="menu" id="menu-icon"></i>
+                <button id="mobile-menu-button" class="lg:hidden p-2 text-gray-600 hover:text-orange-500 focus:outline-none">
+                    <i data-lucide="menu" id="icon-menu" class="w-6 h-6"></i>
+                    <i data-lucide="x" id="icon-close" class="hidden w-6 h-6"></i>
                 </button>
             </div>
             
             <!-- Mobile Navigation -->
             <div id="mobile-menu" class="hidden lg:hidden mt-4 pb-4 border-t border-gray-100">
                 <nav class="flex flex-col space-y-2 pt-4 font-bold text-center">
-                    <a href="index.html" class="py-2 hover:text-orange-500">Tuis</a>
-                    <a href="BoyOrGirl.html" class="py-2 hover:text-orange-500">Gender Reveal!</a>
-                    <a href="Familielede.html" class="py-2 text-orange-500 bg-orange-50 rounded-lg">Familielede</a>
-                    <a href="sosiale_media.html" class="py-2 hover:text-orange-500">Sosiale Media</a>
-                    <a href="application_form.html" class="py-2 hover:text-orange-500">Aansoekvorm</a>
-                    <a href="Karstein_Files.html" class="py-2 hover:text-orange-500">Karstein Files</a>
+                    <a href="index.html" class="py-2 hover:text-orange-500 block">Tuis</a>
+                    <a href="BoyOrGirl.html" class="py-2 hover:text-orange-500 block">Gender Reveal!</a>
+                    <a href="Familielede.html" class="py-2 text-orange-500 bg-orange-50 rounded-lg block">Familielede</a>
+                    <a href="sosiale_media.html" class="py-2 hover:text-orange-500 block">Sosiale Media</a>
+                    <a href="application_form.html" class="py-2 hover:text-orange-500 block">Aansoekvorm</a>
+                    <a href="Karstein_Files.html" class="py-2 hover:text-orange-500 block">Karstein Files</a>
                 </nav>
             </div>
         </div>
@@ -90,147 +93,107 @@
 
     <main class="py-16 sm:py-24">
         <div class="container mx-auto px-6 text-center">
-            <h2 class="font-pacifico text-5xl md:text-6xl text-orange-500">Ontmoet die Hele Familie!</h2>
-            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Elkeen van ons is uniek en spesiaal. Hier is 'n bietjie meer oor ons elkeen, insluitend ons spesiale statistieke!</p>
+            <h2 class="font-pacifico text-5xl md:text-6xl text-orange-600 mb-6">Ontmoet die Bende!</h2>
+            <p class="mt-4 text-lg text-gray-700 max-w-3xl mx-auto font-medium">
+                Elkeen van ons bring iets anders tafel toe (gewoonlik 'n leë bord in Junior se geval). 
+                Kyk na ons amptelike "Karsten Stats" hieronder!
+            </p>
         </div>
 
-        <!-- Member Cards Section - This will be populated by JavaScript -->
-        <div id="member-cards-container" class="container mx-auto px-6 mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            <!-- Member cards will be inserted here -->
+        <!-- Member Cards Section -->
+        <div id="member-cards-container" class="container mx-auto px-6 mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+            <!-- JavaScript populates this -->
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white mt-16">
-        <div class="container mx-auto px-6 py-8 text-center">
-            <p class="font-bold">&copy; 2026 Die Karstens. Alle Regte Voorbehou.</p>
-            <p class="text-sm text-gray-400 mt-2">Met liefde gemaak vir ons familie en vriende.</p>
+    <footer class="bg-gray-900 text-white py-12 mt-20">
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="font-pacifico text-2xl text-orange-400 mb-4">Die Karstens</h3>
+            <p class="text-sm text-gray-500 uppercase tracking-widest">&copy; 2026 Alle Regte Voorbehou</p>
         </div>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- DATA ---
-            // Centralized data for all family members. Makes it easy to add/remove/edit people.
             const familyMembers = [
                 {
                     name: "Marius Jr Karsten",
                     title: "Die Pa",
                     description: "Marius: die man van die huis van sy vrou. Sy grootste vrees... Brenda.",
                     image: "Pa.jpg",
-                    stats: { Strength: 8, Perception: 2, Endurance: 1, Charisma: 6, Intelligence: 3, Agility: 1, Luck: 6 }
+                    stats: { Strength: 8, Perception: 2, Endurance: 1, Charisma: 6, Intelligence: 3 }
                 },
                 {
                     name: "Brenda Karsten",
                     title: "Die Ma",
-                    description: "Brenda: die regte \"man\" van die huis. Haar grootste vrees... Vuil vloere.",
+                    description: "Die regte baas. Haar oë is oral. Sy kan 'n vuil vloer uit 'n ander provinsie ruik.",
                     image: "Ma.jpg",
-                    stats: { Strength: 10, Perception: 10, Endurance: 100, Charisma: 10, Intelligence: 9, Agility: 10, Luck: 8 }
+                    stats: { Strength: 10, Perception: 10, Endurance: 10, Charisma: 9, Intelligence: 9 }
                 },
                 {
                     name: "Junior Karsten",
                     title: "Oudste Kind",
-                    description: "Junior: sê hy's nie honger nie maar kyk die kos uit jou mikrogolf uit.",
+                    description: "Sê hy's nie honger nie, maar jou kos verdwyn geheimsinnig in sy rigting.",
                     image: "Jun.jpg",
-                    stats: { Strength: 3, Perception: 4, Endurance: 5, Charisma: 6, Intelligence: 2, Agility: 1, Luck: 7 }
+                    stats: { Strength: 3, Perception: 4, Endurance: 5, Charisma: 6, Intelligence: 2 }
                 },
-				{
+                {
                     name: "Saskea Karsten",
-                    title: "Junior se verloofde",
-                    description: "Saskea: Misterieus... Maar lyk soos die tipe wat jou mikrogolfplate sal steel as jy haar sjokolademelk drink.",
+                    title: "Die Verloofde",
+                    description: "Misterieus... Sal jou mikrogolfplate steel as jy haar sjokolademelk drink.",
                     image: "Sas.jpg",
-                    stats: { Strength: 1, Perception: 2, Endurance: 3, Charisma: 6, Intelligence: 8, Agility: 4, Luck: 8 }
+                    stats: { Strength: 4, Perception: 6, Endurance: 5, Charisma: 8, Intelligence: 8 }
                 },
-				 {
-                    name: "Stella-May Neveah Karsten",
-                    title: "Junior en Saskea se Kind",
-                    description: "Burp en poep soos n Dinosaur...",
+                {
+                    name: "Stella-May Karsten",
+                    title: "Die Kleinkind",
+                    description: "Burp en poep soos 'n klein Dinosaur. Die oulikste Karsten op rekord.",
                     image: "Stella.jpg",
-                    stats: { Strength: 7, Perception: 6, Endurance: 7, Charisma: 10, Intelligence: 8, Agility: 1, Luck: 9 }
+                    stats: { Strength: 7, Perception: 6, Endurance: 7, Charisma: 10, Luck: 9 }
                 },
                 {
                     name: "Dylan Karsten",
                     title: "Middel Kind",
-                    description: "Dylan: die een wat claim hy is 'n \"cat lover\" maar hou net van sy eie kat.",
+                    description: "Claim hy is 'n 'cat lover' maar ignoreer eintlik almal behalwe sy eie kat.",
                     image: "SDK.jpg",
-                    stats: { Strength: 100, Perception: 1, Endurance: 8, Charisma: 8, Intelligence: 5, Agility: 7, Luck: '?' }
+                    stats: { Strength: 9, Perception: 1, Endurance: 8, Charisma: 8, Intelligence: 5 }
                 },
                 {
                     name: "Charmone Karsten",
                     title: "Jongste Kind",
-                    description: "Charmone is die video-redakteur en 'n drama queen wat altyd die slagoffer van haarself is.",
+                    description: "Video-redakteur en amptelike Drama Queen. Altyd die slagoffer van haar eie dade.",
                     image: "Charm.jpg",
-                    stats: { Strength: 1, Perception: 2, Endurance: 8, Charisma: 1, Intelligence: 2, Agility: 7, Luck: 9 }
+                    stats: { Strength: 2, Perception: 3, Endurance: 8, Charisma: 4, Agility: 9 }
                 },
                 {
-				
-                    name: "Chezaan van Niekerk",
-                    title: "Nuwe Karsten ",
-                    description: "Die Fury.",
-                    image: "Chezaan.jpg", 
-                    stats: { Strength: 10, Perception: 4, Endurance: 111, Charisma: 6, Intelligence: 8, Agility: 10, Luck: 7 }
-                },
-               
-                {
-					name: "Dennis",
-                    title: "My Prince",
-                    description: "My Eerste en enigste liefde",
-                    image: "DEN.jpg",
-                    stats: { Strength: '?', Perception: '?', Endurance: '?', Charisma: '?', Intelligence: '?', Agility: '?', Luck: '?' }
-                },
-                {
-                     name: "Chermelé Wolmarans",
-                    title: "Die Hond",
-                    description: "Chimmie: identifiseer as 'n Karsten die dag toe sy die hele familie glo getrou het. Almal is te bang om haar te skei.",
-                    image: "Ch.jpg",
-                    stats: { Strength: 8, Perception: 10, Endurance: 8, Charisma: 1000, Intelligence: 9, Agility: 8, Luck: 8 }
-                },
-                {
-					name: "Nicola Karsten",
+                    name: "Nicola Karsten",
                     title: "Die Kat",
-                    description: "Nicola: Sy sal teen 'n bank piepie om dit as haar gebied te beskou... Dis nie haar bank nie.",
+                    description: "Sal teen jou bank piepie net om te wys sy besit jou. Sy's die hoof van sekuriteit.",
                     image: "nika.jpg",
-                    stats: { Strength: 9, Perception: 8, Endurance: 7, Charisma: 9, Intelligence: 10, Agility: 7, Luck: 100 }
-                },
-                {
-                    name: "Keara Katsen",
-                    title: "Die Ginger Kat",
-                    description: "Keara, die ginger kat wat dink sy is 'n mens. Sy sal jou oordeel van 'n afstand af.",
-                    image: "Ginger.jpg", // Vervang met regte prentnaam
-                    stats: { Strength: 1.69420, Perception: 6, Endurance: 2, Charisma: 3, Intelligence: 30, Agility: 7, Luck: 10 }
-                },
-                {
-                    name: "Darylin Scott",
-                    title: "Die Rot Vanger",
-                    description: "Darylin, die amptelike rot vanger van die Karsten-huis. Geen knaagdier is veilig nie.",
-                    image: "Scott.jpg", // Vervang met regte prentnaam
-                    stats: { Strength: 6, Perception: 1, Endurance: 10, Charisma: 10, Intelligence: 14.67, Agility: 8, Luck: 0 }
+                    stats: { Strength: 5, Charisma: 9, Intelligence: 10, Agility: 8, Luck: 10 }
                 }
             ];
 
-            // --- FUNCTIONS ---
-            
-            // Helper function to create a single stat bar
             const createStatBar = (label, value) => {
                 const numericValue = parseFloat(value);
-                // Cap the percentage at 100 for display purposes
                 const percentage = !isNaN(numericValue) ? Math.min(numericValue * 10, 100) : 0;
-                const displayValue = isNaN(numericValue) ? value : numericValue;
                 
                 return `
-                <div class="flex items-center mb-2 last:mb-0">
-                    <strong class="w-28 text-xs font-bold text-gray-600 uppercase tracking-wider">${label}</strong>
-                    <div class="flex-1 stat-bar-bg mr-2">
-                        <div class="stat-bar" style="width: ${percentage}%;"></div>
+                <div class="flex items-center mb-3">
+                    <span class="w-24 text-[10px] font-bold text-gray-500 uppercase tracking-tighter">${label}</span>
+                    <div class="flex-1 stat-bar-bg mx-2">
+                        <div class="stat-bar" style="width: 0%;" data-target="${percentage}"></div>
                     </div>
-                    <span class="text-sm font-extrabold text-gray-700 w-8 text-right">${displayValue}</span>
+                    <span class="text-xs font-bold text-orange-600 w-6 text-right">${value}</span>
                 </div>`;
             };
 
-            // Function to create a full member card from a data object
-            const createMemberCard = (member) => {
+            const container = document.getElementById('member-cards-container');
+            
+            familyMembers.forEach(member => {
                 const card = document.createElement('div');
-                card.className = "bg-white rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 flex flex-col";
+                card.className = "member-card bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col border border-orange-100";
                 
                 let statsHtml = '';
                 for (const [key, value] of Object.entries(member.stats)) {
@@ -238,53 +201,52 @@
                 }
 
                 card.innerHTML = `
-                    <img src="${member.image}" alt="Foto van ${member.name}" class="w-full h-60 object-cover object-center" onerror="this.onerror=null;this.src='https://placehold.co/400x300/d1d5db/374151?text=Foto+Onbeskikbaar';">
-                    <div class="p-6 flex flex-col flex-grow">
-                        <h3 class="text-2xl font-bold text-gray-900">${member.name}</h3>
-                        <p class="font-pacifico text-orange-500 text-lg mb-2">${member.title}</p>
-                        <p class="text-gray-600 h-20 overflow-y-auto flex-grow">${member.description}</p>
-                        <div class="mt-4 pt-4 border-t border-gray-200">
+                    <div class="h-64 overflow-hidden bg-gray-200 relative">
+                        <img src="${member.image}" alt="${member.name}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400?text=${member.name}'">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                             <h3 class="text-xl font-bold text-white">${member.name}</h3>
+                             <p class="text-orange-300 font-pacifico text-sm">${member.title}</p>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <p class="text-gray-600 text-sm mb-6 italic leading-relaxed">"${member.description}"</p>
+                        <div class="mt-auto">
                             ${statsHtml}
                         </div>
                     </div>
                 `;
-                return card;
+                container.appendChild(card);
+            });
+
+            // Animate bars on scroll
+            const animateBars = () => {
+                const bars = document.querySelectorAll('.stat-bar');
+                bars.forEach(bar => {
+                    const rect = bar.getBoundingClientRect();
+                    if(rect.top < window.innerHeight && rect.bottom > 0) {
+                        bar.style.width = bar.getAttribute('data-target') + '%';
+                    }
+                });
             };
 
-            // --- SCRIPT EXECUTION ---
+            window.addEventListener('scroll', animateBars);
+            setTimeout(animateBars, 500);
 
-            // Populate the page with member cards
-            const container = document.getElementById('member-cards-container');
-            if (container) {
-                familyMembers.forEach(member => {
-                    const card = createMemberCard(member);
-                    container.appendChild(card);
-                });
-            }
-
-            // Initialize Lucide Icons
+            // Initialize Icons
             lucide.createIcons();
 
-            // Mobile menu toggle functionality
-            const menuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            if (menuButton && mobileMenu) {
-                menuButton.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                    const icon = menuButton.querySelector('i');
-                    if (mobileMenu.classList.contains('hidden')) {
-                        icon.setAttribute('data-lucide', 'menu');
-                    } else {
-                        icon.setAttribute('data-lucide', 'x');
-                    }
-                    lucide.createIcons();
-                });
-            }
+            // Mobile Menu
+            const btn = document.getElementById('mobile-menu-button');
+            const menu = document.getElementById('mobile-menu');
+            const iconMenu = document.getElementById('icon-menu');
+            const iconClose = document.getElementById('icon-close');
+
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+                iconMenu.classList.toggle('hidden');
+                iconClose.classList.toggle('hidden');
+            });
         });
     </script>
 </body>
 </html>
-
-
-
