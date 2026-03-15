@@ -82,10 +82,26 @@
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             z-index: 2000;
             justify-content: center;
             align-items: center;
+            user-select: none;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            padding: 15px;
+            border-radius: 50%;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .nav-btn:hover {
+            background: #b22234;
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -102,7 +118,6 @@
                 </div>
             </div>
             
-            <!-- Desktop Nav (Al 6 skakels) -->
             <nav class="hidden lg:flex items-center space-x-6 text-[10px] font-bold uppercase tracking-widest">
                 <a href="index.html" class="nav-link">Tuis</a>
                 <a href="BoyOrGirl.html" class="nav-link">Gender Reveal!</a>
@@ -116,7 +131,6 @@
                 <i data-lucide="menu" id="menu-icon"></i>
             </button>
 
-            <!-- Mobile Menu (Al 6 skakels) -->
             <div id="mobile-menu">
                 <nav class="flex flex-col p-6 space-y-4 font-bold uppercase tracking-widest text-xs text-center">
                     <a href="index.html" class="py-2 border-b border-white/10">Tuis</a>
@@ -162,15 +176,29 @@
 
     <!-- Lightbox -->
     <div id="lightbox" onclick="closeLightbox()">
-        <button class="absolute top-5 right-5 text-white bg-red-700 p-3 rounded-full hover:bg-black transition-all">
+        <!-- Close Button -->
+        <button class="absolute top-5 right-5 text-white bg-red-700 p-3 rounded-full hover:bg-black transition-all z-[2100]">
             <i data-lucide="x" class="w-8 h-8"></i>
         </button>
-        <div class="relative bg-white p-4 shadow-2xl max-w-[90%] max-h-[80%] border-8 border-gray-200" onclick="event.stopPropagation()">
+
+        <!-- Navigation Buttons -->
+        <button class="absolute left-4 md:left-10 nav-btn z-[2100]" onclick="prevImage(event)">
+            <i data-lucide="chevron-left" class="w-10 h-10"></i>
+        </button>
+        
+        <button class="absolute right-4 md:right-10 nav-btn z-[2100]" onclick="nextImage(event)">
+            <i data-lucide="chevron-right" class="w-10 h-10"></i>
+        </button>
+
+        <!-- Image Container -->
+        <div class="relative bg-white p-4 shadow-2xl max-w-[90%] max-h-[85%] border-8 border-gray-200 flex flex-col items-center" onclick="event.stopPropagation()">
             <div class="absolute -top-10 left-0 bg-black text-white px-4 py-1 text-[10px] font-bold uppercase">
-                Bewysstuk <span id="lb-id"></span> // STATUS: KONFISKEER
+                Bewysstuk <span id="lb-id-display"></span> // STATUS: KONFISKEER
             </div>
-            <img id="lightbox-img" src="" alt="Evidence" class="max-h-[60vh] md:max-h-[70vh] object-contain">
-            <div class="mt-4 flex flex-col md:flex-row justify-between items-center gap-4 border-t pt-4 border-gray-100">
+            
+            <img id="lightbox-img" src="" alt="Evidence" class="max-h-[60vh] md:max-h-[70vh] object-contain shadow-inner">
+            
+            <div class="mt-4 w-full flex flex-col md:flex-row justify-between items-center gap-4 border-t pt-4 border-gray-100">
                 <span id="lb-filename" class="text-[10px] font-official text-gray-500 italic"></span>
                 <a id="download-btn" href="#" download class="bg-blue-900 hover:bg-red-700 text-white px-8 py-3 text-xs font-bold uppercase transition-all flex items-center gap-2">
                     <i data-lucide="download" class="w-4 h-4"></i> Laai Af
@@ -190,16 +218,17 @@
         const totalItems = 90;
         const itemsPerPage = 10;
         let currentPage = 1;
+        let currentIdx = 1;
 
         function tryNextExtension(imgElement, codeName) {
             const extensions = ['.jpeg', '.jpg', '.png', '.JPG'];
             const currentSrc = imgElement.src;
-            let currentIdx = -1;
+            let extIdx = -1;
             for (let i = 0; i < extensions.length; i++) {
-                if (currentSrc.endsWith(extensions[i])) { currentIdx = i; break; }
+                if (currentSrc.endsWith(extensions[i])) { extIdx = i; break; }
             }
-            if (currentIdx < extensions.length - 1) {
-                imgElement.src = codeName + extensions[currentIdx + 1];
+            if (extIdx < extensions.length - 1) {
+                imgElement.src = codeName + extensions[extIdx + 1];
             } else {
                 imgElement.src = 'https://via.placeholder.com/400x500/cccccc/333333?text=GECLASSIFISEER';
                 imgElement.onerror = null;
@@ -207,25 +236,51 @@
         }
 
         function openLightbox(idx) {
-            const idNum = String(idx).padStart(8, '0');
+            currentIdx = idx;
+            updateLightbox();
+            document.getElementById('lightbox').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        function updateLightbox() {
+            const idNum = String(currentIdx).padStart(8, '0');
             const codeName = `KFTA${idNum}`;
-            const lb = document.getElementById('lightbox');
             const lbImg = document.getElementById('lightbox-img');
             
             lbImg.src = `${codeName}.jpeg`;
-            document.getElementById('download-btn').href = `${codeName}.jpeg`;
-            document.getElementById('lb-id').innerText = `#${idx}`;
-            document.getElementById('lb-filename').innerText = `Lêer: ${codeName}.jpeg`;
+            lbImg.onerror = () => tryNextExtension(lbImg, codeName);
             
-            lb.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-            lucide.createIcons();
+            document.getElementById('download-btn').href = `${codeName}.jpeg`;
+            document.getElementById('lb-id-display').innerText = `#${currentIdx}`;
+            document.getElementById('lb-filename').innerText = `Lêer: ${codeName}.jpeg`;
+        }
+
+        function nextImage(e) {
+            if (e) e.stopPropagation();
+            currentIdx = currentIdx >= totalItems ? 1 : currentIdx + 1;
+            updateLightbox();
+        }
+
+        function prevImage(e) {
+            if (e) e.stopPropagation();
+            currentIdx = currentIdx <= 1 ? totalItems : currentIdx - 1;
+            updateLightbox();
         }
 
         function closeLightbox() {
             document.getElementById('lightbox').style.display = 'none';
             document.body.style.overflow = 'auto';
         }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('lightbox').style.display === 'flex') {
+                if (e.key === 'ArrowRight') nextImage();
+                if (e.key === 'ArrowLeft') prevImage();
+                if (e.key === 'Escape') closeLightbox();
+            }
+        });
 
         function renderGallery(page) {
             const grid = document.getElementById('files-grid');
@@ -240,7 +295,7 @@
                 card.className = "evidence-folder p-3 group hover:scale-[1.03] transition-transform cursor-pointer relative";
                 card.onclick = () => openLightbox(i);
                 card.innerHTML = `
-                    <div class="absolute top-0 left-0 bg-gray-400 text-white text-[8px] px-2 font-bold">ITEM_${i}</div>
+                    <div class="absolute top-0 left-0 bg-gray-400 text-white text-[8px] px-2 font-bold z-10">ITEM_${i}</div>
                     <div class="w-full aspect-[3/4] bg-gray-100 overflow-hidden border border-gray-200">
                         <img src="${codeName}.jpeg" alt="${codeName}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" onerror="tryNextExtension(this, '${codeName}')">
                     </div>
@@ -262,8 +317,6 @@
                 container.innerHTML = '';
                 for (let i = 1; i <= totalPages; i++) {
                     const btn = document.createElement('button');
-                    const s = (i - 1) * itemsPerPage + 1;
-                    const e = Math.min(i * itemsPerPage, totalItems);
                     btn.innerText = `DOSSIER_${i}`;
                     btn.className = `px-3 py-2 font-official text-[9px] transition-all border-2 ${currentPage === i ? 'bg-red-700 border-red-700 text-white shadow-lg' : 'bg-white border-gray-300 text-gray-500 hover:border-black'}`;
                     btn.onclick = () => { currentPage = i; renderGallery(i); window.scrollTo({ top: 0, behavior: 'smooth' }); };
