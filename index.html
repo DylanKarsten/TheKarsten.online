@@ -114,20 +114,21 @@
                 </nav>
 
                 <!-- Mobile Menu Button -->
-                <button id="mobile-menu-button" class="lg:hidden p-2 text-gray-600 hover:text-orange-500">
-                    <i data-lucide="menu" id="menu-icon"></i>
+                <button id="mobile-menu-button" class="lg:hidden p-2 text-gray-600 hover:text-orange-500 focus:outline-none">
+                    <i data-lucide="menu" id="icon-menu" class="w-6 h-6"></i>
+                    <i data-lucide="x" id="icon-close" class="hidden w-6 h-6"></i>
                 </button>
             </div>
             
             <!-- Mobile Navigation -->
             <div id="mobile-menu" class="hidden lg:hidden mt-4 pb-4 border-t border-gray-100">
                 <nav class="flex flex-col space-y-2 pt-4 font-bold text-center">
-                    <a href="index.html" class="py-2 text-orange-500 bg-orange-50 rounded-lg">Tuis</a>
-                    <a href="BoyOrGirl.html" class="py-2 hover:text-orange-500">Gender Reveal!</a>
-                    <a href="Familielede.html" class="py-2 hover:text-orange-500">Familielede</a>
-                    <a href="sosiale_media.html" class="py-2 hover:text-orange-500">Sosiale Media</a>
-                    <a href="application_form.html" class="py-2 hover:text-orange-500">Aansoekvorm</a>
-                    <a href="Karstein_Files.html" class="py-2 hover:text-orange-500">Karstein Files</a>
+                    <a href="index.html" class="py-2 text-orange-500 bg-orange-50 rounded-lg block">Tuis</a>
+                    <a href="BoyOrGirl.html" class="py-2 hover:text-orange-500 block">Gender Reveal!</a>
+                    <a href="Familielede.html" class="py-2 hover:text-orange-500 block">Familielede</a>
+                    <a href="sosiale_media.html" class="py-2 hover:text-orange-500 block">Sosiale Media</a>
+                    <a href="application_form.html" class="py-2 hover:text-orange-500 block">Aansoekvorm</a>
+                    <a href="Karstein_Files.html" class="py-2 hover:text-orange-500 block">Karstein Files</a>
                 </nav>
             </div>
         </div>
@@ -179,38 +180,38 @@
                 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                     <!-- Photo -->
-                    <div class="bg-white p-6 rounded-2xl shadow-xl border-t-8 border-orange-400">
+                    <div class="bg-white p-6 rounded-2xl shadow-xl border-t-8 border-orange-400 flex flex-col items-center">
                         <h3 class="font-pacifico text-3xl text-orange-500 mb-6 text-center">Foto van die Week</h3>
-                        <div class="media-container aspect-video mb-6">
+                        <div class="media-container aspect-video w-full mb-6 bg-gray-100">
                             <img src="JunBM2.jpeg" onerror="this.src='https://placehold.co/800x450?text=Foto+Kom+Binnekort'" alt="Foto" class="w-full h-full object-cover">
                             <div class="media-watermark">The Karstens</div>
                         </div>
-                        <div class="flex flex-col items-center">
-                            <p class="text-gray-600 italic mb-6 text-center">'n Spesiale oomblik van ons week wat ons graag deel.</p>
-                            <a href="JunBM2.jpeg" download class="flex items-center space-x-2 bg-orange-500 text-white font-bold py-2 px-6 rounded-full hover:bg-orange-600 transition-all">
-                                <i data-lucide="download" class="w-5 h-5"></i>
-                                <span>Laai Foto Af</span>
-                            </a>
-                        </div>
+                        <p class="text-gray-600 italic mb-6 text-center">'n Spesiale oomblik van ons week wat ons graag deel.</p>
+                        <a href="JunBM2.jpeg" download class="flex items-center space-x-2 bg-orange-500 text-white font-bold py-2 px-6 rounded-full hover:bg-orange-600 transition-all mt-auto">
+                            <i data-lucide="download" class="w-5 h-5"></i>
+                            <span>Laai Foto Af</span>
+                        </a>
                     </div>
 
                     <!-- Video -->
                    <div class="bg-white rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border-4 border-orange-200 flex flex-col items-center transform hover:-translate-y-2">
-                        <h3 class="font-pacifico text-3xl sm:text-4xl text-orange-500 mb-6">Video van die Week</h3>
-                        <div class="w-full aspect-w-16 aspect-h-9 media-container video-container">
-                            <video controls preload="metadata" class="w-full h-full object-cover rounded-lg">
+                        <h3 class="font-pacifico text-3xl sm:text-4xl text-orange-500 mb-6 text-center">Video van die Week</h3>
+                        <div class="media-container aspect-video w-full video-container bg-black mb-6">
+                            <video controls preload="metadata" class="w-full h-full object-cover">
                                 <source src="VidWeek.mp4" type="video/mp4">
                                 Jou blaaier ondersteun nie die video-etiket nie.
                             </video>
-                            <div class="video-overlay rounded-lg">
+                            <div class="video-overlay">
                                 <i data-lucide="play-circle" class="w-16 h-16 text-white opacity-75"></i>
                             </div>
                             <span class="media-watermark">The Karstens</span>
                         </div>
-                        <p class="mt-6 text-gray-700 text-base sm:text-lg">Nog 'n wonderlike herinnering vasgevang!</p>
-                        <a href="VidWeek.mp4" download="VidWeek.mp4" class="mt-4 inline-block bg-orange-500 text-white font-bold py-2 px-6 rounded-full hover:bg-orange-600 transition-colors duration-300 shadow-md hover:shadow-lg">Laai Video Af</a>
+                        <p class="text-gray-700 text-base sm:text-lg mb-6 text-center">Nog 'n wonderlike herinnering vasgevang!</p>
+                        <a href="VidWeek.mp4" download="VidWeek.mp4" class="flex items-center space-x-2 bg-orange-500 text-white font-bold py-2 px-6 rounded-full hover:bg-orange-600 transition-colors duration-300 shadow-md hover:shadow-lg mt-auto">
+                            <i data-lucide="download" class="w-5 h-5"></i>
+                            <span>Laai Video Af</span>
+                        </a>
                     </div>
-                </div>
                 </div>
             </div>
         </section>
@@ -224,47 +225,43 @@
                 <div class="flex flex-wrap justify-center gap-4 mb-16">
                     <!-- Predefined member circles -->
                     <div class="group relative">
-                        <div class="w-20 h-20 md:w-28 md:h-28 rounded-full border-4 border-orange-100 overflow-hidden shadow-lg transform group-hover:scale-110 group-hover:border-orange-500 transition-all duration-300">
+                        <div class="w-20 h-20 md:w-28 md:h-28 rounded-full border-4 border-orange-100 overflow-hidden shadow-lg transform group-hover:scale-110 group-hover:border-orange-500 transition-all duration-300 bg-gray-200">
                             <img src="Pa.jpg" onerror="this.src='https://placehold.co/150?text=Pa'" class="w-full h-full object-cover">
                         </div>
                     </div>
                     <div class="group relative">
-                        <div class="w-20 h-20 md:w-28 md:h-28 rounded-full border-4 border-orange-100 overflow-hidden shadow-lg transform group-hover:scale-110 group-hover:border-orange-500 transition-all duration-300">
+                        <div class="w-20 h-20 md:w-28 md:h-28 rounded-full border-4 border-orange-100 overflow-hidden shadow-lg transform group-hover:scale-110 group-hover:border-orange-500 transition-all duration-300 bg-gray-200">
                             <img src="nika.jpg" onerror="this.src='https://placehold.co/150?text=Nika'" class="w-full h-full object-cover">
                         </div>
                     </div>
                     <div class="group relative">
-                        <div class="w-20 h-20 md:w-28 md:h-28 rounded-full border-4 border-orange-100 overflow-hidden shadow-lg transform group-hover:scale-110 group-hover:border-orange-500 transition-all duration-300">
+                        <div class="w-20 h-20 md:w-28 md:h-28 rounded-full border-4 border-orange-100 overflow-hidden shadow-lg transform group-hover:scale-110 group-hover:border-orange-500 transition-all duration-300 bg-gray-200">
                             <img src="Junior.jpg" onerror="this.src='https://placehold.co/150?text=Junior'" class="w-full h-full object-cover">
                         </div>
                     </div>
                     
-					<div class="group relative">
-                        <div class="w-20 h-20 md:w-28 md:h-28 rounded-full border-4 border-orange-100 overflow-hidden shadow-lg transform group-hover:scale-110 group-hover:border-orange-500 transition-all duration-300">
+                    <div class="group relative">
+                        <div class="w-20 h-20 md:w-28 md:h-28 rounded-full border-4 border-orange-100 overflow-hidden shadow-lg transform group-hover:scale-110 group-hover:border-orange-500 transition-all duration-300 bg-gray-200">
                             <img src="Charm.jpg" onerror="this.src='https://placehold.co/150?text=Dylan'" class="w-full h-full object-cover">
                         </div>
                     </div>
-					<div class="group relative">
-                        <div class="w-20 h-20 md:w-28 md:h-28 rounded-full border-4 border-orange-100 overflow-hidden shadow-lg transform group-hover:scale-110 group-hover:border-orange-500 transition-all duration-300">
-                            <img src="Brenda.jpg" onerror="this.src='https://placehold.co/150?text=Junior'" class="w-full h-full object-cover">
+                    <div class="group relative">
+                        <div class="w-20 h-20 md:w-28 md:h-28 rounded-full border-4 border-orange-100 overflow-hidden shadow-lg transform group-hover:scale-110 group-hover:border-orange-500 transition-all duration-300 bg-gray-200">
+                            <img src="Brenda.jpg" onerror="this.src='https://placehold.co/150?text=Brenda'" class="w-full h-full object-cover">
                         </div>
                     </div>
-					<div class="group relative">
-                        <div class="w-20 h-20 md:w-28 md:h-28 rounded-full border-4 border-orange-100 overflow-hidden shadow-lg transform group-hover:scale-110 group-hover:border-orange-500 transition-all duration-300">
-                            <img src="Chim.jpg" onerror="this.src='https://placehold.co/150?text=Junior'" class="w-full h-full object-cover">
+                    <div class="group relative">
+                        <div class="w-20 h-20 md:w-28 md:h-28 rounded-full border-4 border-orange-100 overflow-hidden shadow-lg transform group-hover:scale-110 group-hover:border-orange-500 transition-all duration-300 bg-gray-200">
+                            <img src="Chim.jpg" onerror="this.src='https://placehold.co/150?text=Chim'" class="w-full h-full object-cover">
                         </div>
                     </div>
-					<div class="group relative">
-                        <div class="w-20 h-20 md:w-28 md:h-28 rounded-full border-4 border-orange-100 overflow-hidden shadow-lg transform group-hover:scale-110 group-hover:border-orange-500 transition-all duration-300">
-                            <img src="Sas.jpg" onerror="this.src='https://placehold.co/150?text=Junior'" class="w-full h-full object-cover">
+                    <div class="group relative">
+                        <div class="w-20 h-20 md:w-28 md:h-28 rounded-full border-4 border-orange-100 overflow-hidden shadow-lg transform group-hover:scale-110 group-hover:border-orange-500 transition-all duration-300 bg-gray-200">
+                            <img src="Sas.jpg" onerror="this.src='https://placehold.co/150?text=Sas'" class="w-full h-full object-cover">
                         </div>
                     </div>
                 </div>
-				
-				
-				
-				
-
+                
                 <a href="Familielede.html" class="inline-flex items-center space-x-3 bg-orange-500 text-white font-bold py-4 px-10 rounded-full hover:bg-orange-600 transition-all shadow-lg hover:shadow-2xl transform hover:-translate-y-1">
                     <span>Sien Alle Familielede</span>
                     <i data-lucide="arrow-right" class="w-5 h-5"></i>
@@ -293,25 +290,22 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Lucide Icons
+            // Initialiseer Lucide Icons
             lucide.createIcons();
 
-            // Mobile Menu
+            // Mobiele Kieslys (Hamburger) Logika
             const btn = document.getElementById('mobile-menu-button');
             const menu = document.getElementById('mobile-menu');
-            const icon = document.getElementById('menu-icon');
+            const iconMenu = document.getElementById('icon-menu');
+            const iconClose = document.getElementById('icon-close');
 
             btn.addEventListener('click', () => {
-                const isHidden = menu.classList.contains('hidden');
+                // Wissel die kieslys paneel
                 menu.classList.toggle('hidden');
                 
-                // Toggle Icon
-                if (isHidden) {
-                    icon.setAttribute('data-lucide', 'x');
-                } else {
-                    icon.setAttribute('data-lucide', 'menu');
-                }
-                lucide.createIcons();
+                // Wissel tussen die "hamburger" en "x" ikoon
+                iconMenu.classList.toggle('hidden');
+                iconClose.classList.toggle('hidden');
             });
         });
     </script>
