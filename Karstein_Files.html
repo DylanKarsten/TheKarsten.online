@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Die Karstens - Karstein Files</title>
+    <title>DOJ Evidence Vault - Karstein Files</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts: Pacifico, Nunito & Special Elite (Typewriter style) -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Pacifico&family=Special+Elite&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Special+Elite&family=Pacifico&display=swap" rel="stylesheet">
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -19,168 +19,170 @@
     <style>
         .font-pacifico { font-family: 'Pacifico', cursive; }
         .font-typewriter { font-family: 'Special Elite', cursive; }
+        .font-official { font-family: 'Roboto Mono', monospace; }
         
         body {
-            font-family: 'Nunito', sans-serif;
-            background-color: #1a1a1a; /* Donker agtergrond vir mystery */
-            background-image: radial-gradient(#2a2a2a 1px, transparent 1px);
-            background-size: 20px 20px;
-            color: #e0e0e0;
+            font-family: 'Roboto Mono', monospace;
+            background-color: #e5e7eb;
+            color: #111827;
+            background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
         }
 
-        .glass-card {
-            background: rgba(40, 40, 40, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
+        .doj-blue { background-color: #002d62; }
+        .doj-red { background-color: #b22234; }
 
-        /* Classified Stamp Effect */
-        .confidential-stamp {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            border: 3px solid #ff4444;
-            color: #ff4444;
-            padding: 2px 8px;
-            font-family: 'Special Elite', cursive;
-            text-transform: uppercase;
-            transform: rotate(15deg);
-            opacity: 0.7;
-            pointer-events: none;
-            font-size: 0.6rem;
-            border-radius: 4px;
-            z-index: 20;
-        }
-
-        .nav-link {
-            transition: all 0.3s;
+        .evidence-folder {
+            background: #fff;
+            border: 1px solid #9ca3af;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
             position: relative;
         }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background-color: #f97316;
-            transition: width 0.3s;
+
+        .redacted {
+            background-color: #000;
+            color: #000;
+            cursor: help;
+            transition: color 0.3s;
         }
-        .nav-link:hover::after { width: 100%; }
+        .redacted:hover { color: #fff; }
+
+        .stamp {
+            border: 3px solid #b22234;
+            color: #b22234;
+            padding: 4px 12px;
+            font-family: 'Special Elite', cursive;
+            text-transform: uppercase;
+            font-weight: bold;
+            transform: rotate(-15deg);
+            display: inline-block;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+            pointer-events: none;
+        }
+
+        #mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: #001f44;
+            border-bottom: 5px solid #b22234;
+            z-index: 100;
+        }
+        #mobile-menu.active { display: block; }
+
+        .nav-link {
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover { border-bottom: 2px solid #b22234; }
 
         #lightbox {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 1000;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-        }
-
-        .file-folder {
-            border-left: 10px solid #f97316;
-        }
-
-        /* Grainy overlay effect */
-        .grain {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url("https://www.transparenttextures.com/patterns/carbon-fibre.png");
-            opacity: 0.05;
-            pointer-events: none;
-            z-index: 999;
         }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
-    <div class="grain"></div>
 
-    <!-- Header -->
-    <header class="bg-black/80 backdrop-blur-md shadow-2xl border-b border-white/10 sticky top-0 z-50">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="index.html" class="text-3xl font-pacifico text-orange-500">Die Karstens</a>
+    <!-- Official DOJ Header -->
+    <header class="doj-blue text-white shadow-2xl sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center relative">
+            <div class="flex items-center gap-3">
+                <i data-lucide="shield-check" class="text-white w-8 h-8"></i>
+                <div>
+                    <h1 class="text-lg font-bold uppercase leading-none tracking-tighter">Dept. van Karstein Sake</h1>
+                    <p class="text-[9px] uppercase tracking-[0.3em] opacity-70">Buro vir Binnelandse Chaos & Springs-Ondersoeke</p>
+                </div>
+            </div>
             
-            <nav class="hidden lg:flex items-center space-x-6 font-bold text-gray-300">
-                <a href="index.html" class="nav-link px-2 py-1">Tuis</a>
-                <a href="BoyOrGirl.html" class="nav-link px-2 py-1">Gender Reveal!</a>
-                <a href="Familielede.html" class="nav-link px-2 py-1">Familielede</a>
-                <a href="sosiale_media.html" class="nav-link px-2 py-1">Sosiale Media</a>
-                <a href="application_form.html" class="nav-link px-2 py-1">Aansoekvorm</a>
-                <a href="Karstein_Files.html" class="text-orange-500 border-b-2 border-orange-500 px-2 py-1">Karstein Files</a>
+            <!-- Desktop Nav (Al 6 skakels) -->
+            <nav class="hidden lg:flex items-center space-x-6 text-[10px] font-bold uppercase tracking-widest">
+                <a href="index.html" class="nav-link">Tuis</a>
+                <a href="BoyOrGirl.html" class="nav-link">Gender Reveal!</a>
+                <a href="Familielede.html" class="nav-link">Familielede</a>
+                <a href="sosiale_media.html" class="nav-link">Sosiale Media</a>
+                <a href="application_form.html" class="nav-link">Aansoekvorm</a>
+                <a href="Karstein_Files.html" class="text-red-500 border-b-2 border-red-500">Karstein Files</a>
             </nav>
 
-            <button id="mobile-menu-button" class="lg:hidden p-2 text-gray-300">
-                <i data-lucide="menu"></i>
+            <button id="mobile-menu-button" class="lg:hidden p-2">
+                <i data-lucide="menu" id="menu-icon"></i>
             </button>
-        </div>
-        
-        <div id="mobile-menu" class="hidden lg:hidden bg-black/95 border-t border-white/10">
-            <nav class="flex flex-col space-y-3 p-6 font-bold text-center">
-                <a href="index.html">Tuis</a>
-                <a href="BoyOrGirl.html">Gender Reveal!</a>
-                <a href="Familielede.html">Familielede</a>
-                <a href="sosiale_media.html">Sosiale Media</a>
-                <a href="application_form.html">Aansoekvorm</a>
-                <a href="Karstein_Files.html" class="text-orange-500">Karstein Files</a>
-            </nav>
+
+            <!-- Mobile Menu (Al 6 skakels) -->
+            <div id="mobile-menu">
+                <nav class="flex flex-col p-6 space-y-4 font-bold uppercase tracking-widest text-xs text-center">
+                    <a href="index.html" class="py-2 border-b border-white/10">Tuis</a>
+                    <a href="BoyOrGirl.html" class="py-2 border-b border-white/10">Gender Reveal!</a>
+                    <a href="Familielede.html" class="py-2 border-b border-white/10">Familielede</a>
+                    <a href="sosiale_media.html" class="py-2 border-b border-white/10">Sosiale Media</a>
+                    <a href="application_form.html" class="py-2 border-b border-white/10">Aansoekvorm</a>
+                    <a href="Karstein_Files.html" class="py-2 text-red-500">Karstein Files</a>
+                </nav>
+            </div>
         </div>
     </header>
 
+    <!-- Case Metadata -->
+    <div class="bg-gray-300 border-b border-gray-400 py-1 px-6">
+        <div class="container mx-auto flex justify-between text-[10px] font-bold text-gray-700 uppercase">
+            <span>Dossier: <span class="text-black">SPRINGS-CR-2026-X</span></span>
+            <span>Agent: <span class="text-black">Onbekend</span></span>
+            <span class="hidden md:inline">Sekuriteitsvlak: <span class="text-red-700 underline">Net vir mense met geduld</span></span>
+        </div>
+    </div>
+
     <!-- Main Content -->
-    <main class="flex-grow container mx-auto px-6 py-16">
-        <div class="text-center mb-16 relative">
-            <div class="inline-block border-2 border-orange-500/30 p-4 rounded-lg bg-orange-500/5 mb-4">
-                <span class="font-typewriter text-xs tracking-[0.5em] text-orange-500 uppercase">Top Secret / Classified</span>
-            </div>
-            <h1 class="text-5xl md:text-7xl font-typewriter text-white mb-4 uppercase tracking-tighter">Karstein Files</h1>
-            <p class="text-gray-400 text-lg max-w-2xl mx-auto font-typewriter italic">
-                Waarskuwing: Hierdie lêers bevat hoogs sensitiewe inligting oor die Karsten-dinastie. Slegs vir gemagtigde oë.
+    <main class="flex-grow container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto mb-16 border-l-8 border-red-700 pl-8">
+            <div class="stamp">Hoogs Sensitief</div>
+            <h2 class="text-4xl md:text-6xl font-typewriter text-black mb-4 uppercase">Die Karstein Argief</h2>
+            <p class="text-gray-800 text-sm md:text-base font-official leading-relaxed">
+                Hierdie galery bevat items wat gekonfiskeer is tydens die <span class="redacted">Groot Braai Voorval</span> van 2025. 
+                Enige persoon wat hierdie foto's sonder 'n <span class="redacted">geldige rede</span> bekyk, sal gedwing word om 
+                <span class="redacted">Springs toe te trek</span> vir 'n naweek. Jy is gewaarsku.
             </p>
         </div>
 
-        <!-- Navigation/Pagination -->
         <div id="pagination-top" class="flex flex-wrap justify-center gap-2 mb-12"></div>
 
-        <!-- The Evidence Grid -->
-        <div id="files-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
-            <!-- JavaScript injected evidence -->
+        <div id="files-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            <!-- JS Injection -->
         </div>
 
         <div id="pagination-bottom" class="flex flex-wrap justify-center gap-2 mt-16"></div>
     </main>
 
-    <!-- Lightbox Modal -->
+    <!-- Lightbox -->
     <div id="lightbox" onclick="closeLightbox()">
-        <button class="absolute top-5 right-5 text-white bg-white/10 p-3 rounded-full hover:bg-orange-500 transition-all">
+        <button class="absolute top-5 right-5 text-white bg-red-700 p-3 rounded-full hover:bg-black transition-all">
             <i data-lucide="x" class="w-8 h-8"></i>
         </button>
-        <div class="relative p-2 bg-white rounded-sm shadow-[0_0_50px_rgba(0,0,0,1)] max-w-[90%] max-h-[80%]">
-            <img id="lightbox-img" src="" alt="Classified Image" class="block" onclick="event.stopPropagation()">
-            <div class="absolute bottom-0 left-0 w-full bg-black/70 text-white p-2 text-[10px] font-mono">
-                LÊER_STATUS: ONTSLUIT // GEBRUIKER: GEREGISTREER
+        <div class="relative bg-white p-4 shadow-2xl max-w-[90%] max-h-[80%] border-8 border-gray-200" onclick="event.stopPropagation()">
+            <div class="absolute -top-10 left-0 bg-black text-white px-4 py-1 text-[10px] font-bold uppercase">
+                Bewysstuk <span id="lb-id"></span> // STATUS: KONFISKEER
             </div>
-        </div>
-        <div class="mt-8 flex gap-4">
-            <a id="download-btn-full" href="#" download class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-4 px-10 rounded-sm font-typewriter shadow-2xl flex items-center gap-3 transition-transform active:scale-95" onclick="event.stopPropagation()">
-                <i data-lucide="download" class="w-5 h-5"></i>
-                LAI LÊER AF
-            </a>
+            <img id="lightbox-img" src="" alt="Evidence" class="max-h-[60vh] md:max-h-[70vh] object-contain">
+            <div class="mt-4 flex flex-col md:flex-row justify-between items-center gap-4 border-t pt-4 border-gray-100">
+                <span id="lb-filename" class="text-[10px] font-official text-gray-500 italic"></span>
+                <a id="download-btn" href="#" download class="bg-blue-900 hover:bg-red-700 text-white px-8 py-3 text-xs font-bold uppercase transition-all flex items-center gap-2">
+                    <i data-lucide="download" class="w-4 h-4"></i> Laai Af
+                </a>
+            </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-black text-gray-500 mt-24 border-t border-white/5">
-        <div class="container mx-auto px-6 py-12 text-center">
-            <div class="mb-4 opacity-30 grayscale invert">
-                <i data-lucide="info" class="w-12 h-12 mx-auto"></i>
-            </div>
-            <p class="font-typewriter text-sm tracking-widest uppercase">&copy; 2026 Karstein Intelligence Agency. Alle lêers is geklassifiseer.</p>
+    <footer class="bg-black text-gray-500 py-10 border-t-4 border-red-700">
+        <div class="container mx-auto px-6 text-center text-[10px] tracking-[0.4em] uppercase">
+            &copy; 2026 Departement van Karstein Sake. Moenie vrae vra nie.
         </div>
     </footer>
 
@@ -192,32 +194,30 @@
         function tryNextExtension(imgElement, codeName) {
             const extensions = ['.jpeg', '.jpg', '.png', '.JPG'];
             const currentSrc = imgElement.src;
-            let currentIndex = -1;
-            
+            let currentIdx = -1;
             for (let i = 0; i < extensions.length; i++) {
-                if (currentSrc.endsWith(extensions[i])) {
-                    currentIndex = i;
-                    break;
-                }
+                if (currentSrc.endsWith(extensions[i])) { currentIdx = i; break; }
             }
-
-            if (currentIndex < extensions.length - 1) {
-                const nextExt = extensions[currentIndex + 1];
-                imgElement.src = codeName + nextExt;
+            if (currentIdx < extensions.length - 1) {
+                imgElement.src = codeName + extensions[currentIdx + 1];
             } else {
-                imgElement.src = 'https://via.placeholder.com/400x400/111111/444444?text=GEKLASSIFISEER';
+                imgElement.src = 'https://via.placeholder.com/400x500/cccccc/333333?text=GECLASSIFISEER';
                 imgElement.onerror = null;
             }
         }
 
-        function openLightbox(imgSrc) {
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            const downloadBtn = document.getElementById('download-btn-full');
+        function openLightbox(idx) {
+            const idNum = String(idx).padStart(8, '0');
+            const codeName = `KFTA${idNum}`;
+            const lb = document.getElementById('lightbox');
+            const lbImg = document.getElementById('lightbox-img');
             
-            lightboxImg.src = imgSrc;
-            downloadBtn.href = imgSrc;
-            lightbox.style.display = 'flex';
+            lbImg.src = `${codeName}.jpeg`;
+            document.getElementById('download-btn').href = `${codeName}.jpeg`;
+            document.getElementById('lb-id').innerText = `#${idx}`;
+            document.getElementById('lb-filename').innerText = `Lêer: ${codeName}.jpeg`;
+            
+            lb.style.display = 'flex';
             document.body.style.overflow = 'hidden';
             lucide.createIcons();
         }
@@ -230,38 +230,23 @@
         function renderGallery(page) {
             const grid = document.getElementById('files-grid');
             grid.innerHTML = '';
-            
             const start = (page - 1) * itemsPerPage + 1;
             const end = Math.min(page * itemsPerPage, totalItems);
 
             for (let i = start; i <= end; i++) {
-                const idNumber = String(i).padStart(8, '0');
-                const codeName = `KFTA${idNumber}`;
-                const initialSrc = `${codeName}.jpeg`;
-
+                const idNum = String(i).padStart(8, '0');
+                const codeName = `KFTA${idNum}`;
                 const card = document.createElement('div');
-                card.className = "glass-card p-4 flex flex-col items-center group relative overflow-hidden file-folder transition-all hover:border-orange-500/50";
-
+                card.className = "evidence-folder p-3 group hover:scale-[1.03] transition-transform cursor-pointer relative";
+                card.onclick = () => openLightbox(i);
                 card.innerHTML = `
-                    <div class="confidential-stamp">Confidential</div>
-                    <div class="w-full aspect-[4/5] bg-black rounded-sm mb-4 overflow-hidden relative cursor-pointer shadow-inner" onclick="openLightbox(this.querySelector('img').src)">
-                        <img src="${initialSrc}" 
-                             alt="${codeName}" 
-                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 opacity-80 group-hover:opacity-100" 
-                             onerror="tryNextExtension(this, '${codeName}')">
-                        <div class="absolute inset-0 bg-orange-500/10 mix-blend-overlay"></div>
-                        <div class="absolute inset-0 border-[20px] border-black/20 pointer-events-none"></div>
+                    <div class="absolute top-0 left-0 bg-gray-400 text-white text-[8px] px-2 font-bold">ITEM_${i}</div>
+                    <div class="w-full aspect-[3/4] bg-gray-100 overflow-hidden border border-gray-200">
+                        <img src="${codeName}.jpeg" alt="${codeName}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" onerror="tryNextExtension(this, '${codeName}')">
                     </div>
-                    <div class="w-full text-left font-typewriter">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h3 class="font-bold text-orange-500 text-xs tracking-tighter">${codeName}</h3>
-                                <p class="text-[9px] text-gray-500 mt-1 uppercase">Evidence Item #${i}</p>
-                            </div>
-                            <button onclick="event.stopPropagation(); openLightbox(this.closest('.glass-card').querySelector('img').src)" class="text-gray-600 hover:text-orange-500 transition-colors">
-                                <i data-lucide="eye" class="w-4 h-4"></i>
-                            </button>
-                        </div>
+                    <div class="mt-2 text-left">
+                        <h3 class="font-bold text-black text-[10px] truncate">${codeName}</h3>
+                        <p class="text-[8px] text-red-600 font-official uppercase tracking-tighter">Status: Gekonfiskeer</p>
                     </div>
                 `;
                 grid.appendChild(card);
@@ -273,22 +258,15 @@
         function renderPagination() {
             const containers = [document.getElementById('pagination-top'), document.getElementById('pagination-bottom')];
             const totalPages = Math.ceil(totalItems / itemsPerPage);
-
             containers.forEach(container => {
                 container.innerHTML = '';
                 for (let i = 1; i <= totalPages; i++) {
                     const btn = document.createElement('button');
-                    const start = (i - 1) * itemsPerPage + 1;
-                    const end = Math.min(i * itemsPerPage, totalItems);
-                    
-                    btn.innerText = `DOC_${start}_${end}`;
-                    btn.className = `px-3 py-2 font-typewriter text-[10px] transition-all border ${currentPage === i ? 'bg-orange-600 border-orange-600 text-white' : 'bg-transparent border-white/10 text-gray-500 hover:border-orange-500 hover:text-orange-500'}`;
-                    
-                    btn.onclick = () => {
-                        currentPage = i;
-                        renderGallery(i);
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                    };
+                    const s = (i - 1) * itemsPerPage + 1;
+                    const e = Math.min(i * itemsPerPage, totalItems);
+                    btn.innerText = `DOSSIER_${i}`;
+                    btn.className = `px-3 py-2 font-official text-[9px] transition-all border-2 ${currentPage === i ? 'bg-red-700 border-red-700 text-white shadow-lg' : 'bg-white border-gray-300 text-gray-500 hover:border-black'}`;
+                    btn.onclick = () => { currentPage = i; renderGallery(i); window.scrollTo({ top: 0, behavior: 'smooth' }); };
                     container.appendChild(btn);
                 }
             });
@@ -296,12 +274,21 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             renderGallery(1);
-
-            const menuButton = document.getElementById('mobile-menu-button');
+            const menuBtn = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
-            
-            menuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
+            const menuIcon = document.getElementById('menu-icon');
+
+            menuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isActive = mobileMenu.classList.toggle('active');
+                menuIcon.setAttribute('data-lucide', isActive ? 'x' : 'menu');
+                lucide.createIcons();
+            });
+
+            document.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                menuIcon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
             });
         });
     </script>
